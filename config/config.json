@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "postgres",
+    "password": "password",
+    "database": "react-o-blog",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "test": {
+    "username": "postgres",
+    "password": "password",
+    "database": "react-o-blog",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  },
+  "production": {
+    "username": "react-o-blog_user",
+    "password": "letsGo",
+    "database": "react-o-blog_mfcg",
+    "host": "127.0.0.1",
+    "dialect": "postgres"
+  }
+}
