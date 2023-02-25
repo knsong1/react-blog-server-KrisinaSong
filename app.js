@@ -20,18 +20,6 @@ const sequelize = new Sequelize('postgres://react-o-blog_user:letsGo@127.0.0.1/r
 
 const { User, Post, Favorites } = require('./models');
 
-app.get('/', (req, res) => {
-  res.render('login.ejs');
-})
-
-app.get('/userspage', (req, res) => {
- res.render('userspage.ejs')
-})
-
-
- app.get('/favorites', (req, res) => {
-  res.render('favorites.ejs')
- })
 
 
 app.post('/users', async (req, res) => {
@@ -53,9 +41,9 @@ app.post('/users', async (req, res) => {
 
 
 app.post('/add-favorites/:id', async (req, res) => {
-     const {favorites} = req.body;
+     const { id } = req.body;
      const addFavorite = await Favorites.create({
-      favorites
+      id
      })
      res.json({
       id: addFavorite.id
@@ -88,10 +76,31 @@ app.delete('/delete-posts/:id', async (req, res) => {
   res.json(deletedPost);
 });
 
+app.delete('/delete-favorites/:id', async (req, res) => {
+    const { id } = req.params;
+    const deleteFavorite = await Post.destroy({
+        where:
+         {
+            id
+        }
+    });
+    res.json(deleteFavorite);
+  });
+
+  app.get('/list-posts/:id', async (req, res) => {
+    const { id } = req.params;
+    const findPost = await Post.findOne({
+        where:
+         {
+            id
+        }
+    });
+    res.json(findPost);
+  });
 
 app.get('/list-users', async (req, res) => {
   const users = await User.findAll({
-      attributes: ['firstName', 'lastName', 'userName']
+      attributes: ['firstName', 'lastName', 'userName', 'password', 'email']
   });
   res.json(users);
 });
@@ -99,15 +108,16 @@ app.get('/list-users', async (req, res) => {
 app.get('/list-posts', async (req, res) => {
   
   const posts = await Post.findAll({
-      attributes: ['id','post', 'favorites', 'createdAt']
+      attributes: ['id','post', 'title', 'favorites', 'createdAt']
   });
   res.json(posts);
 });
 
+
 app.get('/list-favorites', async (req, res) => {
   
   const posts = await Favorites.findAll({
-      attributes: ['id','faovrites']
+      attributes: ['postid','favorites']
   });
   res.json(posts);
 });

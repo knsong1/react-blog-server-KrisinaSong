@@ -4,17 +4,21 @@
 module.exports = {
   async up (queryInterface, Sequelize) {
     queryInterface.addColumn('Favorites', 'postid', {   type: Sequelize.INTEGER,
-      onDelete: 'CASCADE',
+      onDelete: 'NO ACTION',
       references: {
-              model: 'Posts',
+              model: 'Post',
               key: 'id',
               as: 'postid'
-
-            }});
+      }});
 
   },
 
   async down (queryInterface, Sequelize) {
-    queryInterface.removeColumn('Favorites', 'postId');
+    /**
+     * Add reverting commands here.
+     *
+     * Example:
+     * await queryInterface.dropTable('users');
+     */
   }
 };
